@@ -6,6 +6,14 @@ use Illuminate\Support\Facades\Storage;
 class FilmController extends Controller
 {
 
+    public function countFilms()
+    {
+        $films = self::readFilms();
+        $count = count($films);
+
+        return view('films.count', ["count" => $count, "title" => "Total de Películas"]);
+    }
+
     /**
      * Read films from storage
      */
@@ -17,6 +25,7 @@ class FilmController extends Controller
      * List films older than input year 
      * if year is not infomed 2000 year will be used as criteria
      */
+
     public function listOldFilms($year = null)
     {        
         $old_films = [];
