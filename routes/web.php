@@ -29,3 +29,11 @@ Route::middleware('year')->group(function() {
 });
 
 
+Route::get('/countFilms', [FilmController::class, 'countFilms'])->name('countFilms');
+
+Route::get('filmsByYear/{year}', [FilmController::class, 'listFilmsByYear'])->name('filmsByYear');
+
+// Ruta para obtener las películas por género
+Route::get('filmsByGenre/{genre}', [FilmController::class, 'listFilmsByGenre'])->name('filmsByGenre');
+
+Route::get('/sortFilms', [FilmController::class, 'sortFilms']);
