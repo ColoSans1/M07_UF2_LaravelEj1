@@ -1,50 +1,87 @@
 [
     {
-        "name": "La Rosa Púrpura del Cairo",
+        "title": "La Rosa P\u00farpura del Cairo",
         "year": 1985,
         "genre": "Drama",
-        "img_url": "https://es.web.img2.acsta.net/medias/nmedia/18/79/45/34/20253823.jpg",
+        "img_url": "https:\/\/es.web.img2.acsta.net\/medias\/nmedia\/18\/79\/45\/34\/20253823.jpg",
         "country": "Estados Unidos",
         "duration": 82
     },
     {
-        "name": "El Club de los Cinco",
+        "title": "El Club de los Cinco",
         "year": 1985,
         "genre": "Comedia",
-        "img_url": "https://pics.filmaffinity.com/El_club_de_los_cinco-192309838-large.jpg",
+        "img_url": "https:\/\/pics.filmaffinity.com\/El_club_de_los_cinco-192309838-large.jpg",
         "country": "Estados Unidos",
         "duration": 97
     },
     {
-        "name": "Forrest Gump",
+        "title": "Forrest Gump",
         "year": 1994,
         "genre": "Drama",
-        "img_url": "https://pics.filmaffinity.com/Forrest_Gump-212765827-large.jpg",
+        "img_url": "https:\/\/pics.filmaffinity.com\/Forrest_Gump-212765827-large.jpg",
         "country": "Estados Unidos",
         "duration": 142
     },
     {
-        "name": "Arrival",
+        "title": "Arrival",
         "year": 2016,
-        "genre": "Ciencia Ficción",
-        "img_url": "https://pics.filmaffinity.com/La_llegada-686966912-large.jpg",
+        "genre": "Ciencia Ficci\u00f3n",
+        "img_url": "https:\/\/pics.filmaffinity.com\/La_llegada-686966912-large.jpg",
         "country": "Estados Unidos",
         "duration": 116
     },
     {
-        "name": "As Bestas",
+        "title": "As Bestas",
         "year": 2022,
         "genre": "Drama",
-        "img_url": "https://pics.filmaffinity.com/As_bestas-275688233-large.jpg",
-        "country": "España",
+        "img_url": "https:\/\/pics.filmaffinity.com\/As_bestas-275688233-large.jpg",
+        "country": "Espa\u00f1a",
         "duration": 137
     },
     {
-        "name": "Película 2020",
+        "title": "Pel\u00edcula 2020",
         "year": 2020,
         "genre": "Action",
-        "img_url": "https://example.com/image2020.jpg",
-        "country": "España",
+        "img_url": "https:\/\/example.com\/image2020.jpg",
+        "country": "Espa\u00f1a",
         "duration": 120
+    },
+    {
+        "title": "Arnau",
+        "year": "1999",
+        "genre": "Terror",
+        "country": "Espa\u00f1a",
+        "duration": "150"
+    },
+    {
+        "title": "Arnau",
+        "year": "2005",
+        "genre": "Fantasia",
+        "country": "Francia",
+        "duration": "120"
+    },
+    {
+        "title": "Arnau1",
+        "year": "1999",
+        "genre": "Terror",
+        "country": "Espa\u00f1a",
+        "duration": "150"
+    },
+    {
+        "title": "Marc",
+        "year": "1999",
+        "genre": "Terror",
+        "country": "Espa\u00f1a",
+        "duration": "150",
+        "img_url": "images\/cApQwvwlLSLSCN1nBhAcBdSptbaQe0v5wkljAVrb.jpg"
+    },
+    {
+        "title": "Manolitos",
+        "year": "1999",
+        "genre": "Terror",
+        "country": "150",
+        "duration": "5",
+        "image": "images\/dDgnitpkWEblTquYLTp7nANcvGYuPAF9ntHDjgtV.jpg"
     }
 ]

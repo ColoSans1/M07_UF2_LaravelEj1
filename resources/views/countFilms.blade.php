@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Total Films</title>
-</head>
-<body>
+@extends('layout')
+
+@section('title', 'Total Films')
+
+@section('content')
+<div class="container">
     <h1>Total Films</h1>
     <p>The total number of films is: <strong>{{ $filmCount }}</strong></p>
-</body>
-</html>
+</div>
+@endsection

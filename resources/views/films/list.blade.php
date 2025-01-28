@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body class="container">
+@extends('layout')
 
+@section('title', $title)
+
+@section('content')
+<div class="container">
     <h1>{{ $title }}</h1>
 
     @if(empty($films))
@@ -28,10 +24,16 @@
                 <tbody>
                     @foreach($films as $film)
                         <tr>
-                            <td>{{ $film['name'] }}</td>
+                            <td>{{ $film['name'] ?? $film['title'] ?? 'Sin nombre' }}</td>
                             <td>{{ $film['year'] }}</td>
                             <td>{{ $film['genre'] }}</td>
-                            <td><img src="{{ $film['img_url'] }}" style="width: 100px; height: 120px;" /></td>
+                            <td>
+                                @if(isset($film['img_url']))
+                                    <img src="{{ $film['img_url'] }}" style="width: 100px; height: 120px;" />
+                                @else
+                                    <span>Sin imagen</span>
+                                @endif
+                            </td>
                             <td>{{ $film['country'] }}</td>
                             <td>{{ $film['duration'] }} min</td>
                         </tr>
@@ -40,6 +42,6 @@
             </table>
         </div>
     @endif
+</div>
+@endsection
 
-</body>
-</html>
