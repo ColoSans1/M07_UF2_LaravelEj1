@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
             FilmFakerSeeder::class,
             ActorFakerSeeder::class,
             FilmActorSeeder::class,
+            LanguageFakerSeeder::class,
+            FilmLanguageSeeder::class,
         ]);
     }
 }
