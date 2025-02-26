@@ -3,28 +3,25 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Actor;
-use Faker\Factory as Faker; 
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class ActorFakerSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        $faker = Faker::create(); // 🔹 Ahora Faker está correctamente referenciado
+        $faker = Faker::create();
 
         for ($i = 0; $i < 10; $i++) {
-            Actor::create([
-                'name' => $faker->firstName(),
-                'surname' => $faker->lastName(),
-                'birthdate' => $faker->date('Y-m-d', '-20 years'),
-                'country' => $faker->country(),
-                'img_url' => $faker->imageUrl(200, 300, 'people'),
+            DB::table('actors')->insert([
+                'name' => $faker->firstName,
+                'surname' => $faker->lastName,
+                'birthdate' => $faker->date('Y-m-d', '2000-01-01'),
+                'country' => $faker->countryCode, // Usa códigos de país como "US", "ES", etc.
+                'img_url' => $faker->imageUrl(640, 480, 'people', true),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }
 }
-
-
