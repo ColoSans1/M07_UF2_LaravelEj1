@@ -157,52 +157,54 @@ class FilmController extends Controller
     }
     /**
      * Guardar una nueva película en el archivo JSON
-     */
-    public function store(Request $request)
-    {
-        // Leer todas las películas
-        $films = $this->readFilms();
-    
-        // Validar si la película ya existe
-        foreach ($films as $film) {
-            if (strtolower($film['title']) == strtolower($request->input('title')) && $film['year'] == $request->input('year')) {
-                return redirect()->back()->with('error', 'Esta película ya existe.');
-            }
+     *//**
+ * Guardar una nueva película en el archivo JSON
+ */
+public function store(Request $request)
+{
+    // Leer todas las películas
+    $films = $this->readFilms();
+
+    // Validar si la película ya existe (solo por título, ignorando el año)
+    foreach ($films as $film) {
+        if (strtolower($film['title']) == strtolower($request->input('title'))) {
+            return redirect()->back()->with('error', 'Esta película ya existe.');
         }
-    
-        // Validar datos de entrada
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'year' => 'required|integer',
-            'genre' => 'required|string',
-            'country' => 'required|string',
-            'duration' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // La imagen es opcional
-        ]);
-    
-        // Manejar la imagen si se sube
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
-        }
-    
-        // Añadir la nueva película
-        $newFilm = [
-            'title' => $request->input('title'),
-            'year' => $request->input('year'),
-            'genre' => $request->input('genre'),
-            'country' => $request->input('country'),
-            'duration' => $request->input('duration'),
-            'image' => $imagePath, // Puede ser null si no hay imagen
-        ];
-    
-        $films[] = $newFilm;
-    
-        // Guardar el archivo actualizado
-        Storage::disk('public')->put('films.json', json_encode($films, JSON_PRETTY_PRINT));
-    
-        return redirect()->back()->with('success', 'Película añadida correctamente.');
     }
+
+    // Validar datos de entrada
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'year' => 'required|integer',
+        'genre' => 'required|string',
+        'country' => 'required|string',
+        'duration' => 'required|integer',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // La imagen es opcional
+    ]);
+
+    // Manejar la imagen si se sube
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('images', 'public');
+    }
+
+    // Añadir la nueva película
+    $newFilm = [
+        'title' => $request->input('title'),
+        'year' => $request->input('year'),
+        'genre' => $request->input('genre'),
+        'country' => $request->input('country'),
+        'duration' => $request->input('duration'),
+        'image' => $imagePath, // Puede ser null si no hay imagen
+    ];
+
+    $films[] = $newFilm;
+
+    // Guardar el archivo actualizado
+    Storage::disk('public')->put('films.json', json_encode($films, JSON_PRETTY_PRINT));
+
+    return redirect()->back()->with('success', 'Película añadida correctamente.');
+}
     
 
 }
