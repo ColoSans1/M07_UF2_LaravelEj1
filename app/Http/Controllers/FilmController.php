@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use App\Models\Film;
+
 
 class FilmController extends Controller
 {
@@ -111,5 +113,11 @@ class FilmController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Error al añadir la película: ' . $e->getMessage());
         }
+    }
+    public function index()
+    {
+        $films = Film::all();
+
+        return response()->json($films);
     }
 }
