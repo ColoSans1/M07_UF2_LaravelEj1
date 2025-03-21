@@ -16,8 +16,8 @@ class ActorFakerSeeder extends Seeder
             DB::table('actors')->insert([
                 'name' => $faker->firstName,
                 'surname' => $faker->lastName,
-                'birthdate' => $faker->date('Y-m-d', '2000-01-01'),
-                'country' => $faker->countryCode, // Usa códigos de país como "US", "ES", etc.
+                'birthdate' => $faker->date('Y-m-d'),  
+                'country' => $faker->country,
                 'img_url' => $faker->imageUrl(640, 480, 'people', true),
                 'created_at' => now(),
                 'updated_at' => now(),

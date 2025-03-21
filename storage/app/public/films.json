@@ -55,13 +55,6 @@
         "duration": "150"
     },
     {
-        "title": "Arnau",
-        "year": "2005",
-        "genre": "Fantasia",
-        "country": "Francia",
-        "duration": "120"
-    },
-    {
         "title": "Arnau1",
         "year": "1999",
         "genre": "Terror",
@@ -75,5 +68,13 @@
         "country": "Espa\u00f1a",
         "duration": "150",
         "image": "images\/cApQwvwlLSLSCN1nBhAcBdSptbaQe0v5wkljAVrb.jpg"
+    },
+    {
+        "title": "Sora",
+        "year": "1999",
+        "genre": "Terror",
+        "country": "Espa\u00f1a",
+        "duration": "160",
+        "image": null
     }
 ]
