@@ -3,37 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Film; // Importamos el modelo de base de datos
 
 class FilmController extends Controller
 {
-    // Método para contar el total de películas
-    public function countFilms()
-    {
-        $films = $this->readFilms();
-        $filmsCount = count($films);
+public function countFilms()
+{
+    // Utilizamos el QueryBuilder para contar las películas directamente en la base de datos
+    $filmsCount = Film::count();
 
-        return view('countFilms', ['filmCount' => $filmsCount]);
-    }
+    return view('countFilms', ['filmCount' => $filmsCount]);
+}
+
 
     /**
-     * Leer las películas desde el JSON y la base de datos
+     * Leer las películas desde la base de datos (sin JSON)
      */
     public static function readFilms(): array {
-        // Obtener películas desde el JSON
-        $filmsJson = Storage::disk('public')->get('films.json');
-        $films = json_decode($filmsJson, true) ?? [];
-
-        // Obtener películas desde la base de datos
+        // Obtener películas desde la base de datos usando QueryBuilder
         $filmsDb = Film::all()->toArray(); // Convertir a array para fusionar
-
-        // Fusionar ambas fuentes de datos
-        return array_merge($films, $filmsDb);
+        return $filmsDb;
     }
 
     /**
-     * Listar TODAS las películas (desde JSON y BD)
+     * Listar TODAS las películas (solo desde la base de datos)
      */
     public function listFilms()
     {
@@ -82,6 +75,9 @@ class FilmController extends Controller
         return view('films.create'); // Asegúrate de que esta vista existe
     }
 
+    /**
+     * Almacenar una nueva película en la base de datos
+     */
     public function store(Request $request)
     {
         try {
@@ -116,6 +112,4 @@ class FilmController extends Controller
             return back()->with('error', 'Error al añadir la película: ' . $e->getMessage());
         }
     }
-    
-
 }
