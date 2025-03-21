@@ -10,11 +10,11 @@
     <form action="{{ route('actors.byDecade') }}" method="GET">
         <label for="decade">Select Decade:</label>
         <select name="decade" id="decade">
-            <option value="1980">1980</option>
-            <option value="1990">1990</option>
-            <option value="2000">2000</option>
-            <option value="2010">2010</option>
-            <option value="2020">2020</option>
+            <option value="1980" {{ isset($decade) && $decade == '1980' ? 'selected' : '' }}>1980</option>
+            <option value="1990" {{ isset($decade) && $decade == '1990' ? 'selected' : '' }}>1990</option>
+            <option value="2000" {{ isset($decade) && $decade == '2000' ? 'selected' : '' }}>2000</option>
+            <option value="2010" {{ isset($decade) && $decade == '2010' ? 'selected' : '' }}>2010</option>
+            <option value="2020" {{ isset($decade) && $decade == '2020' ? 'selected' : '' }}>2020</option>
         </select>
         <button type="submit">Filter</button>
     </form>

@@ -41,7 +41,7 @@ class ActorController extends Controller
         return view('actors.count', compact('actorCount'));
     }
 
-        /**
+    /**
      * Eliminar un actor por su ID.
      *
      * @param  int  $id
@@ -52,20 +52,14 @@ class ActorController extends Controller
         $actor = Actor::find($id);
     
         if (!$actor) {
-            return response()->json([
-                'action' => 'delete',
-                'status' => false,
-                'message' => 'Actor not found'
-            ], 404);
+            return redirect()->route('actors.index')->with('error', 'Actor no encontrado.');
         }
     
+        // Eliminar el actor
         $actor->delete();
     
-        return response()->json([
-            'action' => 'delete',
-            'status' => true,
-            'message' => 'Actor deleted successfully'
-        ], 200);
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('actors.index')->with('success', 'Actor eliminado correctamente.');
     }
     
 }

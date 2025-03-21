@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <h1>CABECERA DE LA WEB MASTER</h1>
-    <img src="https://imgs.search.brave.com/2wVwEpxJan47rTTjPWcnZGSSdRWns1gQuSdKJXeMoQ4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2luY3JvZ3VpYS50/di9jb21tb24vcHJv/amVjdC9pbWcveHNl/by1tb3ZpZXMucG5n/LnBhZ2VzcGVlZC5p/Yy5IYjJ1blVLMGgt/LnBuZw">
+    <img src="https://imgs.search.brave.com/2wVwEpxJan47rTTjPWcnZGSSdRWns1gQuSdKJXeMoQ4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2luY3JvZ3VpYS50/di9jb21tb24vcHJv/amVjdC9pbWcveHNl/by1tb3ZpZXMucG5n/LnBhZ2VzcGVlZC5p/Yy5IYjJ1blVLMGgt/LnBuZw" alt="Imagen principal" class="img-fluid">
 
     <h1 class="mt-4">Lista de Películas</h1>
     <ul>
@@ -16,14 +16,16 @@
         <li><a href="/sortFilms">Películas Ordenadas por Año</a></li>
         <li><a href="/films/create">Crear Película</a></li> 
         <li><a href="{{ route('actors.index') }}">Ver Actores</a></li>
-        <h1>Lista de Actores</h1>
+    </ul>
 
+    <h1>Lista de Actores</h1>
+    <ul>
         <li><a href="/actors/byDecade">Listar Actores por Década</a></li>
         <li><a href="{{ route('actors.count') }}">Contador de Actores</a></li>
     </ul>
 
     <!-- Formulario para seleccionar la década -->
-    <h1>Buscar Actores por Década de Nacimiento</h1>
+    <h2>Buscar Actores por Década de Nacimiento</h2>
     <form action="{{ route('actors.byDecade') }}" method="GET">
         <div class="form-group">
             <label for="decade">Selecciona una Década:</label>

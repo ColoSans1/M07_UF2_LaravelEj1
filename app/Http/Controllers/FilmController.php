@@ -38,7 +38,7 @@ class FilmController extends Controller
     public function listFilms()
     {
         $films = $this->readFilms();
-        return view('films.list', ["films" => $films, "title" => "Listado de todas las pelis"]);
+        return view('films.list', data: ["films" => $films, "title" => "Listado de todas las pelis"]);
     }
 
     /**
@@ -73,4 +73,49 @@ class FilmController extends Controller
 
         return view('films.list', ['films' => $films, 'title' => 'Películas Ordenadas por Año']);
     }
+
+    /**
+     * Mostrar el formulario para crear una nueva película
+     */
+    public function create()
+    {
+        return view('films.create'); // Asegúrate de que esta vista existe
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            // Validación de datos
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'year' => 'required|integer',
+                'genre' => 'required|string|max:255',
+                'country' => 'required|string|max:255',
+                'duration' => 'required|integer',
+                'image' => 'nullable|image|max:2048'
+            ]);
+    
+            // Guardar la película en la base de datos
+            $film = new Film();
+            $film->title = $request->title;
+            $film->year = $request->year;
+            $film->genre = $request->genre;
+            $film->country = $request->country;
+            $film->duration = $request->duration;
+    
+            // Si hay una imagen, guardarla
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('films', 'public');
+                $film->image = $path;
+            }
+    
+            $film->save();
+    
+            return redirect()->route('films.list')->with('success', 'Película añadida correctamente');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al añadir la película: ' . $e->getMessage());
+        }
+    }
+    
+
 }

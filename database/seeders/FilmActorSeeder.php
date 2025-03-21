@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class FilmActorSeeder extends Seeder
 {
@@ -15,9 +14,16 @@ class FilmActorSeeder extends Seeder
 
         foreach ($filmIds as $filmId) {
             $numActors = rand(1, 3);
+            
             $selectedActors = array_rand($actorIds, $numActors);
+            
+            if ($numActors > 1) {
+                $selectedActors = (array) $selectedActors; 
+            } else {
+                $selectedActors = [$selectedActors]; 
+            }
 
-            foreach ((array) $selectedActors as $actorIndex) {
+            foreach ($selectedActors as $actorIndex) {
                 DB::table('films_actors')->insert([
                     'film_id' => $filmId,
                     'actor_id' => $actorIds[$actorIndex],

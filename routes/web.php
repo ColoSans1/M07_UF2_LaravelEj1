@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |----------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Aquí es donde puedes registrar las rutas web para tu aplicación. 
+| Estas rutas son cargadas por el RouteServiceProvider dentro de un grupo 
+| que contiene el grupo de middleware "web". ¡Ahora crea algo increíble!
 |
 */
 
@@ -48,3 +48,4 @@ Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');
 Route::get('/actors/byDecade', [ActorController::class, 'listByDecade'])->name('actors.byDecade');
 Route::get('/actors/count', [ActorController::class, 'count'])->name('actors.count');
 
+Route::get('/films', [FilmController::class, 'listFilms'])->name('films.list');
