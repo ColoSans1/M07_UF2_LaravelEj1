@@ -15,6 +15,27 @@
         <li><a href="/countFilms">Contador de Películas</a></li>
         <li><a href="/sortFilms">Películas Ordenadas por Año</a></li>
         <li><a href="/films/create">Crear Película</a></li> 
+        <li><a href="{{ route('actors.index') }}">Ver Actores</a></li>
+        <h1>Lista de Actores</h1>
+
+        <li><a href="/actors/byDecade">Listar Actores por Década</a></li>
+        <li><a href="{{ route('actors.count') }}">Contador de Actores</a></li>
     </ul>
+
+    <!-- Formulario para seleccionar la década -->
+    <h1>Buscar Actores por Década de Nacimiento</h1>
+    <form action="{{ route('actors.byDecade') }}" method="GET">
+        <div class="form-group">
+            <label for="decade">Selecciona una Década:</label>
+            <select name="decade" id="decade" class="form-control">
+                <option value="1980">1980 (1980-1989)</option>
+                <option value="1990">1990 (1990-1999)</option>
+                <option value="2000">2000 (2000-2009)</option>
+                <option value="2010">2010 (2010-2019)</option>
+                <option value="2020">2020 (2020-2029)</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
 </div>
 @endsection

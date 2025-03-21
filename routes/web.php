@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\ActorController;
 use App\Http\Middleware\ValidateYear;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +44,7 @@ Route::get('/sortFilms', [FilmController::class, 'sortFilms']);
 
 Route::get('/films/create', [FilmController::class, 'create'])->name('films.create');
 Route::post('/films/store', [FilmController::class, 'store'])->name('films.store');
+Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');
+Route::get('/actors/byDecade', [ActorController::class, 'listByDecade'])->name('actors.byDecade');
+Route::get('/actors/count', [ActorController::class, 'count'])->name('actors.count');
+
