@@ -61,4 +61,16 @@ class ActorController extends Controller
         // Redirigir con un mensaje de éxito
         return redirect()->route('actors.index')->with('success', 'Actor eliminado correctamente.');
     }
+
+    /**
+     * Listar todos los actores con sus películas (API REST para FR2)
+     */
+    public function listActorsWithFilms()
+    {
+        // Obtener todos los actores con sus películas usando Eloquent
+        $actors = Actor::with('films')->get();
+
+        // Devolver el resultado como JSON
+        return response()->json($actors);
+    }
 }
