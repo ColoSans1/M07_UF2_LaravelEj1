@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 use App\Models\Film;
 
 class FilmController extends Controller
@@ -30,21 +29,18 @@ class FilmController extends Controller
             $jsonFilms = json_decode($filmsJson, true) ?? [];
         }
 
-        // Obtener películas desde la base de datos usando QueryBuilder
-        $filmsDb = DB::table('films')->get();
-
-        // Convertir los objetos de la base de datos a arrays para fusionarlos con JSON
-        $filmsDbArray = json_decode(json_encode($filmsDb), true);
+        // Obtener películas desde la base de datos usando Eloquent
+        $filmsDb = Film::all()->toArray();
 
         // Fusionar ambas fuentes de datos
-        $allFilms = array_merge($jsonFilms, $filmsDbArray);
+        $allFilms = array_merge($jsonFilms, $filmsDb);
 
-        // Evitar duplicados por nombre
+        // Evitar duplicados por título
         $uniqueFilms = [];
         foreach ($allFilms as $film) {
-            $name = $film['name'] ?? $film['title'] ?? null;
-            if ($name && !isset($uniqueFilms[$name])) {
-                $uniqueFilms[$name] = $film;
+            $title = $film['title'] ?? null;
+            if ($title && !isset($uniqueFilms[$title])) {
+                $uniqueFilms[$title] = $film;
             }
         }
 
@@ -57,7 +53,7 @@ class FilmController extends Controller
     public function listFilms()
     {
         $films = $this->readFilms();
-        return view('films.list', data: ["films" => $films, "title" => "Listado de todas las pelis"]);
+        return view('films.list', ["films" => $films, "title" => "Listado de todas las pelis"]);
     }
 
     /**
@@ -109,7 +105,7 @@ class FilmController extends Controller
         try {
             // Validación de datos
             $request->validate([
-                'name' => 'required|string|max:255',
+                'title' => 'required|string|max:255',
                 'year' => 'required|integer',
                 'genre' => 'required|string|max:255',
                 'country' => 'required|string|max:255',
@@ -117,15 +113,15 @@ class FilmController extends Controller
                 'img_url' => 'nullable|image|max:2048'
             ]);
 
-            // Guardar la película en la base de datos usando QueryBuilder
-            $filmId = DB::table('films')->insertGetId([
-                'name' => $request->name,
-                'year' => $request->year,
-                'genre' => $request->genre,
-                'country' => $request->country,
-                'duration' => $request->duration,
-                'img_url' => $request->hasFile('img_url') ? $request->file('img_url')->store('films', 'public') : null,
-            ]);
+            // Guardar la película en la base de datos usando Eloquent
+            $film = new Film();
+            $film->title = $request->title;
+            $film->year = $request->year;
+            $film->genre = $request->genre;
+            $film->country = $request->country;
+            $film->duration = $request->duration;
+            $film->img_url = $request->hasFile('img_url') ? $request->file('img_url')->store('films', 'public') : null;
+            $film->save();
 
             return redirect()->route('films.list')->with('success', 'Película añadida correctamente');
         } catch (\Exception $e) {
@@ -138,20 +134,21 @@ class FilmController extends Controller
      */
     public function listFilmsWithActors()
     {
-        // Obtener todas las películas desde la base de datos
-        $films = DB::table('films')->get();
+        $films = Film::with('actors')->get();
+        return response()->json($films);
+    }
 
-        // Para cada película, obtener sus actores
+    /**
+     * Listar todas las películas con sus actores en un formato personalizado
+     */
+    public function getFilmsWithActors()
+    {
+        $films = Film::with('actors')->get();
+        
         $filmsWithActors = $films->map(function ($film) {
-            $actors = DB::table('films_actors')
-                ->where('film_id', $film->id)
-                ->join('actors', 'films_actors.actor_id', '=', 'actors.id')
-                ->select('actors.*')
-                ->get();
-
             return [
                 'id' => $film->id,
-                'name' => $film->name,
+                'title' => $film->title,
                 'year' => $film->year,
                 'genre' => $film->genre,
                 'country' => $film->country,
@@ -159,20 +156,10 @@ class FilmController extends Controller
                 'img_url' => $film->img_url,
                 'created_at' => $film->created_at,
                 'updated_at' => $film->updated_at,
-                'actors' => $actors
+                'actors' => $film->actors
             ];
         });
 
-        // Devolver el resultado como JSON
         return response()->json($filmsWithActors);
-    }
-
-    /**
-     * Método existente para listar películas (puede ser usado para otras APIs)
-     */
-    public function index()
-    {
-        $films = Film::all();
-        return response()->json($films);
     }
 }
