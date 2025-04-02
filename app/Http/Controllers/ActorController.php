@@ -26,7 +26,7 @@ class ActorController extends Controller
         
         // Calcular el rango de años para la década seleccionada
         $startYear = $decade . '-01-01';  // Año de inicio de la década
-        $endYear = ($decade + 9) . '-12-31';  // Año de fin de la década
+        $endYear = (intval($decade) + 9) . '-12-31';  // Año de fin de la década (corrigiendo la concatenación)
 
         // Buscar actores nacidos en el rango de años de la década seleccionada
         $actors = Actor::whereBetween('birthdate', [$startYear, $endYear])->get();
@@ -61,5 +61,4 @@ class ActorController extends Controller
         // Redirigir con un mensaje de éxito
         return redirect()->route('actors.index')->with('success', 'Actor eliminado correctamente.');
     }
-    
 }

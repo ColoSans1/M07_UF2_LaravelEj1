@@ -24,11 +24,12 @@ ISSUS 1
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/films', [FilmController::class, 'index']);
 
 
 Route::delete('/actors/{id}', [ActorController::class, 'destroy']);
 Route::delete('/actors/{id}', [ActorController::class, 'destroy'])->name('actors.destroy');
-Route::get('films', [FilmController::class, 'index']);
+Route::get('/films', [FilmController::class, 'getFilmsWithActors']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
