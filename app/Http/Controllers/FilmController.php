@@ -11,48 +11,19 @@ class FilmController extends Controller
     // Método para contar el total de películas
     public function countFilms()
     {
-        $films = $this->readFilms();
-        $filmsCount = count($films);
+        // Obtener el conteo de películas directamente desde la base de datos usando Eloquent
+        $filmsCount = Film::count();
 
         return view('countFilms', ['filmCount' => $filmsCount]);
     }
 
     /**
-     * Leer las películas desde el JSON y la base de datos
-     */
-    protected function readFilms(): array
-    {
-        // Obtener películas desde el JSON
-        $jsonFilms = [];
-        if (Storage::disk('public')->exists('films.json')) {
-            $filmsJson = Storage::disk('public')->get('films.json');
-            $jsonFilms = json_decode($filmsJson, true) ?? [];
-        }
-
-        // Obtener películas desde la base de datos usando Eloquent
-        $filmsDb = Film::all()->toArray();
-
-        // Fusionar ambas fuentes de datos
-        $allFilms = array_merge($jsonFilms, $filmsDb);
-
-        // Evitar duplicados por título
-        $uniqueFilms = [];
-        foreach ($allFilms as $film) {
-            $title = $film['title'] ?? null;
-            if ($title && !isset($uniqueFilms[$title])) {
-                $uniqueFilms[$title] = $film;
-            }
-        }
-
-        return array_values($uniqueFilms);
-    }
-
-    /**
-     * Listar TODAS las películas (desde JSON y BD)
+     * Listar TODAS las películas (solo BD con Eloquent)
      */
     public function listFilms()
     {
-        $films = $this->readFilms();
+        // Obtener todas las películas desde la base de datos
+        $films = Film::all();
         return view('films.list', ["films" => $films, "title" => "Listado de todas las pelis"]);
     }
 
@@ -61,8 +32,8 @@ class FilmController extends Controller
      */
     public function listOldFilms($year = 2000)
     {
-        $films = $this->readFilms();
-        $old_films = array_filter($films, fn($film) => ($film['year'] ?? 0) < $year);
+        // Obtener películas antiguas usando Eloquent
+        $old_films = Film::where('year', '<', $year)->get();
 
         return view('films.list', ["films" => $old_films, "title" => "Pelis Antiguas (Antes de $year)"]);
     }
@@ -72,8 +43,8 @@ class FilmController extends Controller
      */
     public function listNewFilms($year = 2000)
     {
-        $films = $this->readFilms();
-        $new_films = array_filter($films, fn($film) => ($film['year'] ?? 0) >= $year);
+        // Obtener películas más nuevas usando Eloquent
+        $new_films = Film::where('year', '>=', $year)->get();
 
         return view('films.list', ["films" => $new_films, "title" => "Pelis Nuevas (Después de $year)"]);
     }
@@ -83,8 +54,8 @@ class FilmController extends Controller
      */
     public function sortFilms()
     {
-        $films = $this->readFilms();
-        usort($films, fn($a, $b) => ($b['year'] ?? 0) - ($a['year'] ?? 0));
+        // Obtener las películas ordenadas por año de manera descendente usando Eloquent
+        $films = Film::orderBy('year', 'desc')->get();
 
         return view('films.list', ['films' => $films, 'title' => 'Películas Ordenadas por Año']);
     }
@@ -134,15 +105,17 @@ class FilmController extends Controller
      */
     public function listFilmsWithActors()
     {
-        $films = Film::with('actor')->get();
+        $films = Film::with('actors')->get();
         return response()->json($films);
     }
+    
 
     /**
      * Listar todas las películas con sus actores en un formato personalizado
      */
     public function getFilmsWithActors()
     {
+        // Obtener todas las películas con sus actores usando Eloquent
         $films = Film::with('actors')->get();
         
         $filmsWithActors = $films->map(function ($film) {
