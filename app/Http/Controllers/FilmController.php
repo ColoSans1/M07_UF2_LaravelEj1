@@ -105,10 +105,10 @@ class FilmController extends Controller
      */
     public function listFilmsWithActors()
     {
-        // Obtener todas las películas con sus actores usando Eloquent
         $films = Film::with('actors')->get();
         return response()->json($films);
     }
+    
 
     /**
      * Listar todas las películas con sus actores en un formato personalizado

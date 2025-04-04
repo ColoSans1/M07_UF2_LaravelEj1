@@ -16,4 +16,6 @@ class Film extends Model
     {
         return $this->belongsToMany(Actor::class);
     }
+    
+    
 }
