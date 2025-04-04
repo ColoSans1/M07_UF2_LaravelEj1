@@ -10,13 +10,10 @@ class Film extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'year', 'genre', 'country', 'duration', 'img_url'];
-
+    
     // Relación con los actores
     public function actors()
     {
-        return $this->belongsToMany(Actor::class, 'films_actors', 'film_id', 'actor_id');
+        return $this->belongsToMany(Actor::class);
     }
-    
-
-
 }

@@ -134,7 +134,7 @@ class FilmController extends Controller
      */
     public function listFilmsWithActors()
     {
-        $films = Film::with('actors')->get();
+        $films = Film::with('actor')->get();
         return response()->json($films);
     }
 
