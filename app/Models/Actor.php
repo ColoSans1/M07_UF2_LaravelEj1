@@ -17,5 +17,4 @@ class Actor extends Model
         return $this->belongsToMany(Film::class);
     }
     
-
 }
