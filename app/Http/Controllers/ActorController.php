@@ -51,6 +51,7 @@ class ActorController extends Controller
     public function listActorsWithFilms()
     {
         $actors = Actor::with('films')->get();
+
         return response()->json($actors);
     }
 }
