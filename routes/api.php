@@ -24,6 +24,7 @@ ISSUE 1
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/actors', [ActorController::class, 'listActorsWithFilms']);
 
 // Rutas relacionadas con las películas
 Route::get('/films', [FilmController::class, 'listFilmsWithActors']);  // Ruta para listar todas las películas con sus actores
