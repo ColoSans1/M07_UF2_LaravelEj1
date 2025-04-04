@@ -9,13 +9,12 @@ class CreateActorsTable extends Migration
     public function up()
     {
         Schema::create('actors', function (Blueprint $table) {
-            $table->id(); // id, primary key autoincremental
-            $table->string('name', 30); // name, as 30 string
-            $table->string('surname', 30); // surname, as 30 string
-            $table->date('birthdate'); // birthdate, as date YYYY-MM-DD
-            $table->string('country', 30); // country, as 30 string
-            $table->string('img_url', 255); // img_url, as 255 string
-            $table->timestamps(); // created_at, updated_at as timestamp
+            $table->id();
+            $table->string('name');
+            $table->date('birthdate');          
+            $table->string('country');           
+            $table->string('img_url')->nullable(); 
+            $table->timestamps();               
         });
     }
 
