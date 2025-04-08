@@ -49,3 +49,5 @@ Route::get('/actors/byDecade', [ActorController::class, 'listByDecade'])->name('
 Route::get('/actors/count', [ActorController::class, 'count'])->name('actors.count');
 
 Route::get('/films', [FilmController::class, 'listFilms'])->name('films.list');
+
+Route::get('/films', [FilmController::class, 'listFilmsWithActors']);
