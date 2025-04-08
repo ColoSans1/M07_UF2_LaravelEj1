@@ -3,34 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Film;
+use App\Models\Actor;
 
 class FilmActorSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        $filmIds = DB::table('films')->pluck('id')->toArray();
-        $actorIds = DB::table('actors')->pluck('id')->toArray();
+        $actorIds = Actor::pluck('id')->toArray();
 
-        foreach ($filmIds as $filmId) {
+        Film::all()->each(function ($film) use ($actorIds) {
             $numActors = rand(1, 3);
-            
-            $selectedActors = array_rand($actorIds, $numActors);
-            
-            if ($numActors > 1) {
-                $selectedActors = (array) $selectedActors; 
-            } else {
-                $selectedActors = [$selectedActors]; 
-            }
+            $selectedActors = collect($actorIds)->random($numActors);
 
-            foreach ($selectedActors as $actorIndex) {
-                DB::table('films_actors')->insert([
-                    'film_id' => $filmId,
-                    'actor_id' => $actorIds[$actorIndex],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
+            $film->actors()->attach($selectedActors);
+        });
     }
 }
