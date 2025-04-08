@@ -3,24 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
+use App\Models\Actor;
 
 class ActorFakerSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        $faker = Faker::create();
-
-        for ($i = 0; $i < 10; $i++) {
-            DB::table('actors')->insert([
-                'name' => $faker->firstName,
-                'birthdate' => $faker->date('Y-m-d'),
-                'country' => $faker->country,
-                'img_url' => $faker->imageUrl(640, 480, 'people', true),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        Actor::factory()->count(10)->create();
     }
 }
